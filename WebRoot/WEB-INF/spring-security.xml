@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"  
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:tx="http://www.springframework.org/schema/tx"  
+       xmlns:security="http://www.springframework.org/schema/security"  
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+            http://www.springframework.org/schema/tx
+	        http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+            http://www.springframework.org/schema/context
+	        http://www.springframework.org/schema/context/spring-context-3.1.xsd   
+            http://www.springframework.org/schema/security   
+            http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+    
+    <context:property-placeholder location="classpath:jdbc.properties" />
+    
+    <context:component-scan base-package="com.hyf.cemap"/>
+            
+     <!-- 启用注解方式对方法的权限控制 -->  
+    <security:global-method-security  
+        pre-post-annotations="enabled" secured-annotations="enabled"  
+        jsr250-annotations="enabled" proxy-target-class="true">  
+    </security:global-method-security>  
+            
+    <!--use-expressions="true" 的意思是开启表达式 access-denied-page的意思是，当验证权限失败后会跳转到的页面  -->  
+    <security:http auto-config="true" use-expressions="true" access-denied-page="/powermiss.jsp" >  
+        
+        <!-- 
+        	管理员：	ROLE_ADMIN	
+        	就业处：	ROLE_TEACHER_ADMIN
+        	学院领导：ROLE_COLLEGE_ADMIN  
+        	辅导员：	ROLE_TEACHER
+        	学生：  	ROLE_STUDENT 
+        -->
+        <security:intercept-url pattern="/login/index"  access="hasAnyRole('ROLE_ADMIN','ROLE_TEACHER_ADMIN','ROLE_TEACHER','ROLE_STUDENT')" />
+        
+        <!-- 学院基础数据 学院 专业 班级 -->
+        <security:intercept-url pattern="/administrativeclass/index"  access="hasAnyRole('ROLE_ADMIN','ROLE_TEACHER_ADMIN')" />
+        <security:intercept-url pattern="/college/index"  access="hasAnyRole('ROLE_ADMIN','ROLE_TEACHER_ADMIN')" />
+        <security:intercept-url pattern="/profession/index"  access="hasAnyRole('ROLE_ADMIN','ROLE_TEACHER_ADMIN')" />
+        
+        <!-- 毕业生信息维护 -->
+  	 	<security:intercept-url pattern="/employmentinformation/index"  access="hasAnyRole('ROLE_ADMIN','ROLE_TEACHER_ADMIN')" />
+  	 	<security:intercept-url pattern="/graduateinformation/index"  access="hasAnyRole('ROLE_ADMIN','ROLE_TEACHER_ADMIN','ROLE_TEACHER')" />
+  	 	<security:intercept-url pattern="/graduationfile/index"  access="hasAnyRole('ROLE_ADMIN','ROLE_TEACHER_ADMIN')" />
+  	 	
+  	 	<!-- 资讯信息 -->
+  	 	<security:intercept-url pattern="/news/index"  access="hasAnyRole('ROLE_ADMIN','ROLE_TEACHER_ADMIN')" />
+  	 	<security:intercept-url pattern="/newstype/index"  access="hasAnyRole('ROLE_ADMIN','ROLE_TEACHER_ADMIN')" />
+  	 	<!-- 招聘信息 -->
+  	 	<security:intercept-url pattern="/recruitmentinformation/index"  access="hasAnyRole('ROLE_ADMIN','ROLE_TEACHER_ADMIN','ROLE_TEACHER')" />
+  	 	<security:intercept-url pattern="/preachingmeeting/index"  access="hasAnyRole('ROLE_ADMIN','ROLE_TEACHER_ADMIN','ROLE_TEACHER')" />
+  	 	
+		<!-- 登录 -->	
+		<security:form-login login-page="/login/auth"
+			authentication-success-handler-ref="loginSuccessHandler"
+			default-target-url="/login/index" 
+			authentication-failure-url="/login/auth?error=true" />
+
+        <!-- 退出配置 -->  
+        <security:logout
+        delete-cookies="JSESSIONID" 
+        invalidate-session="true" 
+        logout-url="/j_spring_security_logout"
+        success-handler-ref="logoutScueessHandler" 
+        />   
+        
+       
+    </security:http>  
+    
+    <bean id="loginSuccessHandler" class="com.hyf.cemap.handler.loginSuccessHandler"></bean>
+    <bean id="logoutScueessHandler" class="com.hyf.cemap.handler.logoutScueessHandler"></bean>
+      
+    <!-- 配置一个认证管理器 -->  
+    <security:authentication-manager > <!-- erase-credentials="false" --> 
+        <!-- 使用自定义的UserDetailService  -->  
+        <security:authentication-provider user-service-ref="userDetailServiceImpl"> 
+            <!-- <security:password-encoder hash="md5"/> --> 
+<!--             <security:user-service> -->  
+                <!-- 这样的配置表示向系统中添加了一个用户 用户名和密码都为admin ,并且该用户拥有ROLE_USER角色（角色可以用逗号隔开） -->  
+<!--                 <security:user name="admin" password="admin" authorities="ROLE_USER"/> -->  
+<!--             </security:user-service> -->  
+        </security:authentication-provider>  
+    </security:authentication-manager>
+    
+    <!-- hibernate需要的配置 -->
+    <tx:annotation-driven transaction-manager="hibernateTransactionManager" proxy-target-class="true"/>
+    
+	
+	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+	    <property name="slowSqlMillis" value="3000" />
+	    <property name="logSlowSql" value="true" />
+	    <property name="mergeSql" value="true" />
+    </bean>
+	
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<!-- 基本属性 url、user、password -->
+		<property name="url" value="${database.url}" />
+		<property name="username" value="${database.user}" />
+		<property name="password" value="${database.password}" />
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="1" />
+		<property name="minIdle" value="1" />
+		<property name="maxActive" value="20" />
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="60000" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+	
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+			value="20" />
+	
+		<!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计 -->
+		 <property name="filters" value="log4j,wall" />
+         <property name="proxyFilters">
+	        <list>
+	            <ref bean="stat-filter" />
+	        </list>
+        </property>
+    </bean>  
+	
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan">
+			<list>
+				<value>com.hyf.cemap.bean</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">false</prop>	
+				<!-- 自动生成表，create的话每次启动会删掉表，重新生成 -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+	            <!--<prop key="hibernate.multiTenancy">SCHEMA</prop>
+                <prop key="hibernate.tenant_identifier_resolver">com.ibaby.web.tenant.TenantIdResolver</prop>
+                <prop key="hibernate.multi_tenant_connection_provider">com.ibaby.web.tenant.SchemaBasedMultiTenantConnectionProvider</prop> -->
+			</props>
+		</property>
+	</bean>
+
+
+	<bean id="hibernateTransactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="autodetectDataSource" value="false"/>
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">  
+        <property name="interceptors">        <!-- 配置过滤器 -->  
+            <list>  
+                <ref bean="openSessionInView" />  
+            </list>  
+        </property>  
+    </bean>  
+  
+    <!-- 将OpenSessionInView 打开 -->  
+    <bean id="openSessionInView"  
+        class="org.springframework.orm.hibernate4.support.OpenSessionInViewInterceptor">  
+        <property name="sessionFactory" ref="sessionFactory"></property>  
+    </bean>
+    
+</beans>  

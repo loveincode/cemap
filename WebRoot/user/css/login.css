@@ -1,0 +1,136 @@
+* {
+    font-family: "Microsoft YaHei", sans-serif;
+    color: #fff;
+}
+html {
+    min-height: 100%;
+    min-width: 1000px;
+}
+body {
+    background: url(../img/background.png) center no-repeat;
+    background-size: cover;
+    
+}
+body, body.full-height-layout #page-wrapper, body.full-height-layout #wrapper, html{
+	height:90%;
+}
+.logo {
+    display: inline;
+    width: 123px;
+    height: 60px;
+}
+.logo img {
+    position: absolute;
+    top: 3%;
+    left: 10%;
+}
+.row {
+    margin: 0;
+}
+.login-wrap {
+    width: 100%;
+    height: 260px;
+    min-width: 1000px;
+    position: fixed;
+    left: 0;
+    bottom: 38px;
+    z-index: 10;
+    background: url(../img/banner.png) center no-repeat; 
+    background-size: cover;
+}
+.title {
+    float: right;
+    margin-top: 90px;
+    /*padding-right: 84px;*/
+}
+.title a{
+  display: inline-block;
+}
+.title a:last-child{
+  margin-left: 40px;
+}
+
+.login-wrap .login-box {
+    margin: 28px 0 0 25px;
+    position: relative;
+}
+.login-wrap .login-box p {
+    font-size: 18px;
+    line-height: 30px;
+    margin-bottom: 15px;
+}
+.login-wrap .login-box> input[type=text], .login-wrap .login-box> input[type=password] {
+    width: 306px;
+    height: 38px;
+    display: block;
+    font-size: 16px;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    padding-left: 50px;
+    margin-bottom: 12px;
+    background-repeat: no-repeat no-repeat;
+}
+.login-wrap .login-box .user {
+    background-image: url(../img/material.png), url(../img/bg-input.png);
+    background-position: 11px 6px, center center;
+}
+.login-wrap .login-box .psd {
+    background-image: url(../img/psd.png), url(../img/bg-input.png);
+    background-position: 10px 6px, center center;
+}
+.login-wrap .login-box .btn-wrap {
+    line-height: 38px;
+    font-size: 14px;
+    margin-top: 24px;
+}
+.login-wrap .login-box .btn-wrap button[type=submit] {
+    width: 90px;
+    height: 38px;
+    color: #313193;
+    border: none;
+    font-size: 18px;
+    line-height: 36px;
+    padding: 0;
+    outline: none;
+    background-color: #fff;
+    border-radius: 4px;
+    margin-right: 15px;
+}
+.login-wrap .login-box .btn-wrap button[type=submit]:hover {
+    background-color: #eee;
+}
+.login-wrap .login-box .btn-wrap input[type=checkbox] {
+    width: 17px;
+    height: 17px;
+    margin: 0 8px -3px;
+    position: relative;
+    outline: none;
+    background: url(../img/bg-checkbox.png) no-repeat center center;
+    -webkit-appearance: none;
+    border-radius: 2px;
+}
+.login-wrap .login-box .btn-wrap input[type=checkbox]:checked:after {
+    content: url(../img/ic-checkbox-selected.png);
+    position: absolute;
+    left: 2px;
+    bottom: -3px;
+    z-index: 2;
+}
+.login-wrap .login-box .btn-wrap a {
+    margin-left: 22px;
+    color: #fff;
+    text-decoration: underline;
+}
+@media (max-width:1125px) {
+  .title a:last-child{
+    margin-top: 20px;
+  }
+  .title a:first-child{
+    margin-left: 32px;
+  }
+  .title{
+    margin-top: 60px;
+  }
+}

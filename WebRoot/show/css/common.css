@@ -1,0 +1,84 @@
+@charset "utf-8";
+
+.top_line{ width:100%;border-top: 8px solid #84dcd0; margin:0 auto;}
+
+.menuer{ width:100%; height:112px;margin:auto;position:relative; z-index:5;}
+.menu{ width:985px; margin:auto; height:95px;position:relative;  padding-top:22px;}
+.menu_logo{  float:left; height:71px; float:left}
+.menu_menu{  float:right; color:#333; margin-top:10px; background:url(../images/menuline.png) no-repeat; _background:none;background-position:94px 16px;*background-position:110px 16px;_background-position:130px 16px;position:relative; z-index:5; }
+.nav1 { float:right; position:relative;color:#FFF; } 
+.nav1 ul .livea{float:left; width:92px; z-index:99;  position:relative; text-align:right;height:45px;line-height:40px;list-style:none;}
+.nav1 ul li {background-color: white; float:left; width:92px; z-index:99;  position:relative; text-align:right;height:45px;line-height:40px;}
+.nav1 ul li a{color:#444;text-decoration:none; padding-bottom:8px;*padding-bottom:5px;  font-size:14px; font-family:'Microsoft YaHei';text-align:center;position:relative;z-index:99;}
+.nav1 ul li a:hover{ border-bottom:3px solid #343F54; padding-bottom:8px;*padding-bottom:5px;}
+.cure{border-bottom:3px solid #343F54; padding-bottom:8px;8padding-bottom:5px; }
+
+.livs{ width:143px; margin-top:-40px; height:320px; position:absolute; left:14px;*margin-top:-10px; _margin-top:-10px; float:left; z-index:10;}
+.livs ul{ float:left; padding-top:40px;z-index:10; padding-left:10px;list-style:none;}
+.livs ul li{ height:38px; text-align:left; padding-left:12px; }
+.livs ul li a{color:#444;text-decoration:none; font-size:14px; font-family:'Microsoft YaHei';text-align:center;}
+.livs ul li a:hover{ color:#5FAEE3;border-bottom:none;}
+
+#goTopBtn {
+	POSITION: fixed;
+	TEXT-ALIGN: center;
+	LINE-HEIGHT: 0px;
+	WIDTH: 20px;
+	BOTTOM: 35px;
+	HEIGHT: 20px;
+	FONT-SIZE: 12px;
+	CURSOR: pointer;
+	RIGHT: 80px;
+	bottom: 80px;
+	_position: absolute;
+	_right: auto
+}
+.menu_menu {
+    float: right;
+    color: #333;
+    margin-top: 10px;
+    background: #ffffff;
+    _background: none;
+    background-position: 94px 16px;
+    *background-position: 110px 16px;
+    _background-position: 130px 16px;
+    position: relative;
+    z-index: 5;
+}
+.menuer{
+    background: #ffffff;
+}
+
+#bd {
+	background-position: center 0;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	-webkit-background-size: cover
+}
+
+#mo {
+	filter: alpha(opacity =  50);
+	background-color: #fff;
+}
+
+#testborder23 {
+	margin-left: 125px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
