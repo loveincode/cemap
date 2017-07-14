@@ -5,21 +5,44 @@
 
 <head>
 	<title>INDEX</title>
-   <%@include file="/WEB-INF/views/common/commoncss.jsp" %>
-   <link href="${ctxStatic}/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet">
+	<%@include file="/WEB-INF/views/common/commoncss.jsp" %>
+   
+	<link href="${ctxStatic}/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css">
+	<link href="${ctxStatic}/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css">
+	<link href="${ctxStatic}/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css">
+	
 </head>
 
 <body class="gray-bg">
     <div class="wrapper wrapper-content">
     	
        <!-- ************************* Search Form Start  ************************* -->
-    	
+    	<form id="search_form">
+	    	<div id="searchbar">
+	    		标题：<input id="stitle" type="text" placeholder="模糊">
+	    		
+	    		类型：<select name="snewsType" id="snewsType" >
+	            	<option value="-1">全部</option>
+	            	<c:forEach items="${newsTypes}" var="newsType">
+						<option value="${newsType.id}">${newsType.name}</option>
+					</c:forEach>
+	            </select>
+	              
+	    		<input id="stitle" type="button" value="搜索" onclick="f_search()">
+			</div>
+		</form>
        <!-- *************************   Search Form End  ************************* -->
 
 	   <!-- *************************     Table Start    ************************* -->
-       <div id="maingrid">
-       
-       </div>
+ 		<a class="l-button" style="width:120px;float:left; margin-left:10px; display:none;" onclick="deleteRow()">删除选择的行</a>
+ 
+  
+ 		<div class="l-clear"></div>
+ 
+    		<div id="maingrid"></div>
+    
+  		<div style="display:none;">
+   
        <!-- *************************     Table End    ************************* -->
    </div>
    
@@ -33,94 +56,150 @@
     <!-- 自定义js -->
     <script src="${ctxStatic}/user/js/content.min.js?v=1.0.0"></script>
     
+    
     <!-- ligerUI -->
+    
     <script src="${ctxStatic}/ligerUI/js/core/base.js"></script>
     <script src="${ctxStatic}/ligerUI/js/plugins/ligerGrid.js"></script>
+    <script src="${ctxStatic}/ligerUI/js/ligerui.all.js"></script>
     
     <script type="text/javascript">
 
+    var newsTitle1;
+    var newsTypeID1;
+    
     $(function(){
-		grid = $("#maingrid").ligerGrid(
-		{
-			columns : [ {
-				display : 'id',
-				name : 'id',
-				//width : 200,
-				type: 'int',
-				align: 'center'
-			}, 
+		
+	    grid = $("#maingrid").ligerGrid(
 			{
-				display : '标题',
-				name : 'title',
-				//width : 200,
-				align: 'center'
-			},
-			{
-				display : '类型',
-				name:'newsType.name',
-				//width: 200,
-				align: 'center'
-			},
-			{
-				display : '发布日期',
-				name:'publishDate',
-				//width: 200,
-				align: 'center'
-			},
-			{
-				display : '访问次数',
-				name:'newsClick',
-				//width: 200,
-				align: 'center'
-			},
-			],
-			dataAction : "server",
-			url : "${ctxStatic}/news/dataui",
-			//height : "98%",
-			pageSize : 20,
-			//width : "100%",
-			rownumbers : true,
-			checkbox : true,
-			//autoCheckChildren: false,
-			//onReload:gridreload,
-			//groupColumnName:'newsType.name',
-			//groupColumnDisplay:'类型',
-			
-			/*toolbar : {
-				items : [
-						{
-							text : '增加新类别',
-							click : gridreload,
-							icon : 'add'
-						},
-						{
-							line : true
-						},
-						{
-							text : '修改',
-							click : gridreload,
-							icon : 'modify'
-						},
-						{
-							line : true
-						},
-						{
-							text : '删除',
-							click : gridreload,
-							img : '${baseURL}/ligerUI/lib/ligerUI/skins/icons/delete.gif'
-						} ]
-			}
-			*/
-		})
+				columns : [ {
+					display : 'id',
+					name : 'id',
+					//width : 200,
+					type: 'int',
+					align: 'center'
+				}, 
+				{
+					display : '标题',
+					name : 'title',
+					//width : 200,
+					align: 'center'
+				},
+				{
+					display : '类型',
+					name:'newsType.name',
+					//width: 200,
+					align: 'center'
+				},
+				{
+					display : '发布日期',
+					name:'publishDate',
+					//width: 200,
+					align: 'center'
+				},
+				{
+					display : '访问次数',
+					name:'newsClick',
+					//width: 200,
+					align: 'center'
+				},
+				],
+				dataAction : "server",
+				url : "${ctxStatic}/news/dataui",
+				//height : "98%",
+				pageSize : 10,
+				//width : "100%",
+				rownumbers : true,
+				checkbox : true,
+				//autoCheckChildren: false,
+				onReload:null,
+				
+				/* parms: [
+					{ name: "newsTitle",value: newsTitle1},
+					{ name: "newsTypeID",value: newsTypeID1},
+				],  */
+				
+				//groupColumnName:'newsType.name',
+				//groupColumnDisplay:'类型',
+				toolbar: {
+	                items: [
+	                { text: '增加', click: add, icon: 'add' },
+	                { line: true },
+	                { text: '修改', click: updaterow, icon: 'modify' },
+	                { line: true },
+	                { text: '删除', click: deleterow, img: '${ctxStatic}/ligerUI/skins/icons/delete.gif' }
+	                ]
+	            },
+		});
+    
     });
     
-    function gridreload()
-    { 
-    	console.log("123");
-    	$("#maingrid").ligerGrid().reload();
-	}
-
     
+    function f_search(){
+    	newsTitle1 = $("#stitle").val();
+		newsTypeID1 = $("#snewsType option:selected").val();
+    	
+    	grid.options.parms = [{ name: "newsTitle",value: newsTitle1},
+				{ name: "newsTypeID",value: newsTypeID1}];
+		grid.reload();		
+    	
+    }
+
+    function itemclick(item)
+    {
+        alert(item.text);
+    }
+    
+    function add(){
+    	window.location.href = "${ctxStatic}/news/addPage";
+    }
+    
+    function updaterow(){
+    	
+    	var rowdata = grid.getSelectedRow();
+    	var rowdatas = grid.getSelectedRows();
+    	if(rowdatas.length!=1){
+    		alert("请选择一行咨询");
+    	}
+    	else{
+    		console.log(rowdata.Uuid);
+    		window.location.href = "${ctxStatic}/news/modifyPage?uuid="+rowdata.Uuid
+    	}
+    	
+    }
+    
+    function deleterow(){
+	    var rowdata = grid.getSelectedRow();
+	    var rowdatas = grid.getSelectedRows()
+	    
+	    if (!rowdata)
+	        alert('请选择删除的咨询');
+	    else{
+	    	console.log(rowdatas);
+	    	console.log(rowdatas.length);
+	    	var result = confirm("确定要删除吗？");
+	       	if(result){
+		    	for(var i = 0;i<rowdatas.length;i++){
+		    		console.log(rowdatas[i].Uuid);	
+		    		//删除这些id
+		    		$.ajax
+		            ({ 
+		               url: "delete?uuid="+rowdatas[i].Uuid,
+		               method: 'GET',
+		               dataType: "json", 
+		               data: { 
+		               },
+		               success: function (data) {
+		               		console.log(data);
+		                    
+		               }
+		            })
+		    	}
+		    	window.location.reload();
+	       	}
+	       	
+	    }
+    }
     /*
     $('#addBtn').click(function () {
     	 var columns =

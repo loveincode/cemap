@@ -1,6 +1,7 @@
 package com.hyf.cemap.controller;
 
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
 
@@ -68,6 +69,13 @@ public class NewsController {
 	@RequestMapping(value = "/dataui", method = { RequestMethod.POST }, produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String dataui(HttpServletRequest request, HttpServletResponse response) {
+		
+		Enumeration enu=request.getParameterNames();  
+		while(enu.hasMoreElements()){  
+		String paraName=(String)enu.nextElement();  
+		System.out.println(paraName+": "+request.getParameter(paraName));  
+		}  
+		
 		Integer page = Integer.parseInt(request.getParameter("page"));
 		Integer pagesize = Integer.parseInt(request.getParameter("pagesize"));  
 		
@@ -77,9 +85,27 @@ public class NewsController {
 	    
 	    System.out.println("sortname:"+sortname+"sortorder:"+sortorder);
 	    
+	    
+	    /**
+		 * 获取查询参数
+		 */
+        String title = request.getParameter("newsTitle");
+        if(title != null && title.equals("")){
+            title = null;
+        }
+        String newsTypeID = request.getParameter("newsTypeID");
+        if(newsTypeID != null &&  newsTypeID.equals("")){
+            newsTypeID = null;
+        }
+        Integer typeid=-1;
+        if(newsTypeID!=null){
+            typeid = Integer.parseInt(newsTypeID);
+        }
+        System.out.println("title= "+title+"typeid="+typeid);
+	    
 	    // 总记录数
-	 	Integer recordsTotal = newsService.listNewsByinfo(null, -1, -1, -1).size();
-	    List<News> news =  newsService.listNewsByinfosort(null, -1,page,pagesize,sortname,sortorder);
+	 	Integer recordsTotal = newsService.listNewsByinfo(title, typeid, -1, -1).size();
+	    List<News> news =  newsService.listNewsByinfosort(title, typeid,page,pagesize,sortname,sortorder);
 	    
 	    JsonObject json = new JsonObject();
 	    JsonArray newsListJson = new JsonArray();
@@ -100,7 +126,6 @@ public class NewsController {
 		LigerGridVO ligerGridVO = new LigerGridVO();
 		ligerGridVO.setRows(news);
 		ligerGridVO.setTotal(recordsTotal);
-		System.out.println(recordsTotal);
 	 	//return json.toString();
 		return ligerGridVO.toString();
 	}
