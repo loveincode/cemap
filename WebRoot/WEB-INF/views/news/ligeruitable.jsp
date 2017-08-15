@@ -127,7 +127,10 @@
 	                { line: true },
 	                { text: '修改', click: updaterow, icon: 'modify' },
 	                { line: true },
-	                { text: '删除', click: deleterow, img: '${ctxStatic}/ligerUI/skins/icons/delete.gif' }
+	                { text: '删除', click: deleterow, img: '${ctxStatic}/ligerUI/skins/icons/delete.gif' },
+	                { line: true },
+	                { text: '多选测试', click: readselecteds, }
+	                
 	                ]
 	            },
 		});
@@ -199,6 +202,62 @@
 	       	}
 	       	
 	    }
+    }
+    function readselecteds(){
+    	
+    	var rowdatas = grid.getSelectedRows()
+    	
+    	var rowdatassorted = grid.getSelectedRows("12");
+    	
+    	var len = rowdatas.length;
+    	var len2 = rowdatassorted.length;
+    	rowdatas = secondsort(rowdatas);
+    	/*))
+    	
+    	for (var i = 0; i < len; i++) {
+    	    for (var j = 0; j < len - 1 - i; j++) {
+    	    	// 相邻元素两两对比，将大的换到后面 实现从小到大
+    	        if (rowdatas[j].__index > rowdatas[j+1].__index) {
+    	        	// 元素交换
+    	            var temp = rowdatas[j+1];        
+    	            rowdatas[j+1] = rowdatas[j];
+    	            rowdatas[j] = temp;
+    	        }
+    	    }
+    	}*/
+    	console.log(rowdatas);
+    	console.log(rowdatassorted);
+    	for (var i = 0; i < len; i++) {
+    	    console.log(rowdatas[i].__id);
+    	    console.log(rowdatas[i].__index);
+    	}
+    	
+
+    	
+    	for(var i = 0;i<rowdatas.length;i++){
+    		
+    	}
+    	
+    }
+	
+    //ligerGrid 内部通过选择一个往selected 数组里塞一个 修改起来改动太大
+	//返回的rows每个row带有__index属性,为当页的排序，由小到大
+	//所以采取将获得的rows数据通过__index排序，则能实现 多选从上到下顺序
+	//数据排序
+    function secondsort(rowdatas){
+    	var len = rowdatas.length;
+    	for (var i = 0; i < len; i++) {
+    	    for (var j = 0; j < len - 1 - i; j++) {
+    	    	// 相邻元素两两对比，将大的换到后面 实现从小到大
+    	        if (rowdatas[j].__index > rowdatas[j+1].__index) {
+    	        	// 元素交换
+    	            var temp = rowdatas[j+1];        
+    	            rowdatas[j+1] = rowdatas[j];
+    	            rowdatas[j] = temp;
+    	        }
+    	    }
+    	}
+    	return rowdatas;
     }
     /*
     $('#addBtn').click(function () {

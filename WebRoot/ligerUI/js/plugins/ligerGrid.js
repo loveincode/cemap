@@ -1881,8 +1881,10 @@
             }
             return null;
         },
+        /*
         getSelectedRows: function ()
         {
+        	console.log("没有内部排序");
             var arr = [];
             for (var i in this.selected)
             {
@@ -1891,6 +1893,34 @@
                     arr.push(o);
             }
             return arr;
+        },*/
+        getSelectedRows: function (sorted)
+        {
+            var arr = [];
+            for (var i in this.selected)
+            {
+                var o = this.selected[i];
+                if (o['__id'] in this.records)
+                    arr.push(o);
+            }
+            if(sorted!=null)
+            {
+            	console.log("内部排序");
+	            var len = arr.length;
+	        	for (var i = 0; i < len; i++) {
+	        	    for (var j = 0; j < len - 1 - i; j++) {
+	        	    	// 相邻元素两两对比，将大的换到后面 实现从小到大
+	        	        if (arr[j].__index > arr[j+1].__index) {
+	        	        	// 元素交换
+	        	            var temp = arr[j+1];        
+	        	            arr[j+1] = arr[j];
+	        	            arr[j] = temp;
+	        	        }
+	        	    }
+	        	}
+            }
+            return arr;
+        	//return rowdatas;
         },
         getSelectedRowObj: function ()
         {
