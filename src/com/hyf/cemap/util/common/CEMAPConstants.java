@@ -1,9 +1,4 @@
-/** 
-* Copyright 2016 Shudao Info Tech Co. Ltd.  All rights reserved.
-* @author lhzeng
-* @date 2016-4-14 上午9:14:27 
-* @version V1.0.1
-*/
+
 package com.hyf.cemap.util.common;
 
 import org.apache.commons.lang.SystemUtils;
