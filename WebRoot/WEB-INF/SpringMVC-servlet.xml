@@ -32,7 +32,7 @@
     <bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="WEB-INF/classes/ehcache.xml"/>
      -->
     
-    <!--com.ibaby下面的类均被注入 -->
+    <!--com.hyf.cemap下面的类均被注入 -->
     <!-- use-default-filters="false" 只扫描指定的注解 -->
     <context:component-scan base-package="com.hyf.cemap" >   
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository" />    
