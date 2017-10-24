@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -321,15 +323,19 @@ public class NewsController {
 	 */
 	@RequestMapping(value = "/delete", method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json; charset=utf-8")
+	@Transactional(propagation=Propagation.REQUIRED)
 	public @ResponseBody String delete(
 			@RequestParam(value = "uuid", required = true) String uuid,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		ResultVO resultVO = new ResultVO();
+		
+		
 		try {
 			News news = newsService.getByUuid(uuid);
 			news.setDeleted(true);
 			newsService.update(news);
+//			newsService.deletetx(uuid);
 			resultVO.setSuccess(true);
 			resultVO.setCode("200");
 			resultVO.setMessage("删除成功");
@@ -339,6 +345,7 @@ public class NewsController {
 			resultVO.setCode("500");
 			resultVO.setMessage("删除异常");
 			e.printStackTrace();
+			throw new RuntimeException();
 		}
 		return resultVO.toString();
 	}

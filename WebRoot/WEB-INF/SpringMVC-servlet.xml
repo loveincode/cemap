@@ -25,24 +25,11 @@
     <!--引入数据库的配置文件 -->
     <context:property-placeholder location="classpath:jdbc.properties" />
     
-    <!--
-    <cache:annotation-driven/>
-    
-    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cache-manager-ref="ehcacheManager"/>
-    <bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="WEB-INF/classes/ehcache.xml"/>
-     -->
-    
     <!--com.hyf.cemap下面的类均被注入 -->
     <!-- use-default-filters="false" 只扫描指定的注解 -->
     <context:component-scan base-package="com.hyf.cemap" >   
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository" />    
     </context:component-scan>  
-    
-    <!--切面编程需要的配置 -->
-    <!-- 激活自动代理功能 -->
-	<!--<aop:aspectj-autoproxy proxy-target-class="true"/>-->
-	<!--aop编程，切面 -->
-	<!-- <bean id="myInterceptor" class="com.demo.web.aspect.ServiceAspect"/>-->  
     
     <!-- 视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -62,22 +49,11 @@
 	
 	<mvc:view-controller path="/" view-name="redirect:/login/auth" />
     
-   	<!-- <bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="${database.driver}" />
-		<property name="url" value="${database.url}" />
-		<property name="username" value="${database.user}" />
-		<property name="password" value="${database.password}" />
-	</bean> -->
-
-
 	<!--文件上传需要的配置-->
 	<bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	     <!-- 最大上传文件大小 20971520字节 20MB -->
 	     <property name="resolveLazily" value="true"></property>
 	     <property name="maxUploadSize" value="20971520"></property>
 	 </bean>
-	 
-	 
     
 </beans>

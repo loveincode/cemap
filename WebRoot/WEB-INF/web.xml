@@ -79,6 +79,7 @@
 
 	<servlet>
 		<servlet-name>SpringMVC</servlet-name>
+		<!-- 对应的文件名则为springMVC-servlet.xml -->
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 		<!-- load-on-startup必须放在最后 -->

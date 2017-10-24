@@ -1,6 +1,9 @@
 package com.hyf.cemap.util.persistence;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  * 
@@ -8,6 +11,7 @@ import java.util.List;
 *  @ClassName  BaseService  
 *  @date  2017年2月25日 上午11:52:11
  */
+@Transactional(propagation=Propagation.REQUIRED)
 public interface BaseService<T> {
 	
 	/**
