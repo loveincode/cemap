@@ -162,7 +162,7 @@
     	var rowdata = grid.getSelectedRow();
     	var rowdatas = grid.getSelectedRows();
     	if(rowdatas.length!=1){
-    		alert("请选择一行咨询");
+    		alert("请选择一行修改");
     	}
     	else{
     		console.log(rowdata.Uuid);
