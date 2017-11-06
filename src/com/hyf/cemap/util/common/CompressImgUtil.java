@@ -71,7 +71,7 @@ public class CompressImgUtil {
             }
             BufferedImage tag = new BufferedImage(deskWidth, deskHeight, BufferedImage.TYPE_3BYTE_BGR);
             tag.getGraphics().drawImage(src, 0, 0, deskWidth, deskHeight, null); //绘制缩小后的图
-            FileOutputStream deskImage = new FileOutputStream(CEMAPConstants.imgDir+uuid.toString()); //输出到文件流
+            FileOutputStream deskImage = new FileOutputStream(CEMAPConstants.IMG_PATH+uuid.toString()); //输出到文件流
             JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(deskImage);
             encoder.encode(tag); //近JPEG编码
             deskImage.flush();

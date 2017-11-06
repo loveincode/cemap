@@ -71,12 +71,12 @@ public class FileController {
 					    returnJSON.put("message", "文件超过20Mb，请重新选择");
 	                    return returnJSON.toJSONString();
 					}
-					File path = new File(CEMAPConstants.fileDir);
+					File path = new File(CEMAPConstants.FILE_PATH);
 					if (!path.exists()) {
 						path.mkdirs();
 					}
 					try {
-                        file.transferTo(new File(CEMAPConstants.fileDir + fileName));
+                        file.transferTo(new File(CEMAPConstants.FILE_PATH + fileName));
                     } catch (IOException e) {
                         System.out.println("文件过大");
                     }
@@ -117,7 +117,7 @@ public class FileController {
 		java.io.BufferedInputStream bis = null;
 		java.io.BufferedOutputStream bos = null;
 		// 下载文件路径
-		String downloaddir = CEMAPConstants.fileDir;
+		String downloaddir = CEMAPConstants.FILE_PATH;
 		String downLoadPath = downloaddir + fileName;
 		System.out.println(downLoadPath);
 		try {

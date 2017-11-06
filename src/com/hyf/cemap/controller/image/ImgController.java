@@ -51,7 +51,7 @@ public class ImgController {
                 MultipartFile file = multiRequest.getFile(iter.next());
                 if(file != null){
                     String fileName = CommonUtil.generateUUID();
-                    File path = new File(CEMAPConstants.imgDir);
+                    File path = new File(CEMAPConstants.IMG_PATH);
                     if(!path.exists()){
                         path.mkdirs();
                     }
@@ -62,7 +62,7 @@ public class ImgController {
                         if(fileSize > 150){
                             fileName = CompressImgUtil.compressImg(file.getBytes() , fileName.toString(),660, 0.9d);
                         }else{
-                            file.transferTo(new File(CEMAPConstants.imgDir +fileName));
+                            file.transferTo(new File(CEMAPConstants.IMG_PATH +fileName));
                         }
                     }
                     returnJSON.put("error", 0);
@@ -89,7 +89,7 @@ public class ImgController {
         if(name == null || name == ""){
             return;
         }
-        File file = new File(CEMAPConstants.imgDir+name);
+        File file = new File(CEMAPConstants.IMG_PATH+name);
         if(!(file.exists() && file.canRead())) {
             return;
         }

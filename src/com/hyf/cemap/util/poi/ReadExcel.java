@@ -58,7 +58,7 @@ public class ReadExcel {
      */
     public List<Object> read(String filename) throws IOException {
         System.out.println("服务器中文件名"+filename);
-        InputStream is = new FileInputStream(CEMAPConstants.fileDir+filename);
+        InputStream is = new FileInputStream(CEMAPConstants.FILE_PATH+filename);
         HSSFWorkbook hssfWorkbook = new HSSFWorkbook(is);
         
         List<Object> list = new ArrayList<Object>();
@@ -198,7 +198,7 @@ public class ReadExcel {
         System.out.println("信息无误" +correctcount);
         
         FileDetele fileDetele = new FileDetele();
-        if(fileDetele.delele(CEMAPConstants.fileDir+filename)){
+        if(fileDetele.delele(CEMAPConstants.FILE_PATH+filename)){
             System.out.println("删除成功");
         }
         return list;

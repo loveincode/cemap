@@ -11,6 +11,13 @@ import org.apache.commons.lang.SystemUtils;
  */
 public class CEMAPConstants {
 	
+	//---------------------------File Directory-------------------------------------------
+	//  图片目录
+	public final static String IMG_PATH = SystemUtils.USER_HOME + "/img/";
+	
+	//	附件目录
+	public final static String FILE_PATH = SystemUtils.USER_HOME + "/file/";
+	
 	//--------------------------- 角色  code------------------------------------------
 	// 超级管理员
 	public final static String CEMAP_ROLE_CODE_ADMIN = "ROLE_ADMIN";
@@ -28,12 +35,7 @@ public class CEMAPConstants {
 	public final static String CEMAP_ROLE_CODE_STUDENT = "ROLE_STUDENT";
 	
 	
-	//---------------------------File Directory-------------------------------------------
-	//  图片目录
-	public final static String imgDir = SystemUtils.USER_HOME + "/img/";
-	
-	//	附件目录
-	public final static String fileDir = SystemUtils.USER_HOME + "/file/";
+
 	
 	
 }
