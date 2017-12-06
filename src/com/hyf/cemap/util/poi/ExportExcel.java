@@ -24,12 +24,6 @@
 //import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 //import org.apache.poi.hssf.util.HSSFColor;
 //
-///**
-// * Excel文件导出
-// * @author HawkingChen
-// * @2016-6-23
-// * @param <T>
-// */
 //public class ExportExcel<T> {
 //
 //	public void exportExcel(Collection<T> dataset, OutputStream out) {
