@@ -15,7 +15,7 @@
 						邮箱：<a href="mailto:">career@sspu.edu.cn</a><br />
 						邮编：201209<br />
 						传真：400-888-9999<br /> 
-						地址：上海第二工业大学 - 综合楼4F学生就业服务中心<br />
+						地址：**大学 - 综合楼4F学生就业服务中心<br />
 					</p>
 
 				</div>
@@ -56,7 +56,7 @@
 			<hr/>
 			<div class="row footer-bottom">
 				<ul class="list-inline text-center">
-					<li>CopyRight 2016-2017 © 毕业设计 - 通用性高校就业管理分析平台 Design by 13软工A2  胡一凡 
+					<li>CopyRight 2016-2017 © 毕业设计 - 通用性高校就业管理分析平台 Design by 13软工A2  loveincode 
 					</li>
 				</ul>
 			</div>
